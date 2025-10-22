@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import { sequelize } from './config/db';
 import dotenv from 'dotenv';
+import authRoutes from './routes/auth.routes';
 
 // Load environment variables
 dotenv.config();
@@ -12,6 +13,8 @@ const PORT = process.env.PORT || 3000;
 // Middlewares
 app.use(express.json()); // to read JSON in requests
 
+// Routes
+app.use('/api/auth', authRoutes);
 
 app.get('/', (req: Request, res: Response) => {
   res.json({ message: ' API SportsLine funcionando correctamente' });
@@ -24,7 +27,7 @@ app.get('/', (req: Request, res: Response) => {
         console.log(' Conexión a PostgreSQL establecida correctamente');
     
     // synchronize the models with the database
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ force: true });
     console.log(' Modelos sincronizados correctamente');
 
     // Start server
