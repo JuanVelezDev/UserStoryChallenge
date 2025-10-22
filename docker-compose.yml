@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  backend:
+    build: .
+    container_name: sportsline-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    networks:
+      - backend-network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "512M"
+
+networks:
+  backend-network:
+    driver: bridge
