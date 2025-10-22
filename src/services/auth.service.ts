@@ -1,9 +1,10 @@
 // src/services/authService.ts
 import bcrypt from 'bcrypt';
 import { User } from '../models/user.model';
-import { generateTokens } from '../utils/jwt';
+import { generateTokens, verifyRefreshToken } from '../utils/jwt';
 
 export class AuthService {
+  // Register user
   static async register(nombre: string, email: string, password: string, rol: string) {
     const existing = await User.findOne({ where: { email } });
     if (existing) throw new Error('El correo ya está registrado');
@@ -15,6 +16,7 @@ export class AuthService {
     return { user, ...tokens };
   }
 
+  // Login user
   static async login(email: string, password: string) {
     const user = await User.findOne({ where: { email } });
     if (!user) throw new Error('Usuario no encontrado');
@@ -24,5 +26,16 @@ export class AuthService {
 
     const tokens = generateTokens({ id: user.id, rol: user.rol });
     return { user, ...tokens };
+  }
+
+  // Refresh token
+  static async refreshToken(token: string) {
+    const decoded = verifyRefreshToken(token);
+
+    const user = await User.findByPk(decoded.id);
+    if (!user) throw new Error('Usuario no encontrado');
+
+    const tokens = generateTokens({ id: user.id, rol: user.rol });
+    return { ...tokens };
   }
 }
