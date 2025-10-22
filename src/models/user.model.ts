@@ -1,21 +1,34 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
-import { Order } from './order.model';
-import { RefreshToken } from './RefreshToken';
+// src/models/User.ts
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
-@Table({ tableName: 'users', timestamps: false })
+@Table({
+  tableName: 'users',
+  timestamps: true,
+})
 export class User extends Model {
-  @Column({ type: DataType.STRING, allowNull: false, unique: true })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  nombre!: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+  })
   email!: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
   password!: string;
 
-  @Column({ type: DataType.STRING, defaultValue: 'vendedor' })
-  role!: string;
-
-  @HasMany(() => Order)
-  orders!: Order[];
-
-  @HasMany(() => RefreshToken)
-  tokens!: RefreshToken[];
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    defaultValue: 'vendedor',
+  })
+  rol!: string;
 }
