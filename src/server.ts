@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
 import productRoutes from './routes/product.routes';
 import clientRoutes from './routes/client.routes';
+import orderRoutes from './routes/order.routes';
 
 // Load environment variables
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(express.json()); // to read JSON in requests
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/clients', clientRoutes);
+app.use('/api/orders', orderRoutes);
 app.get('/', (req: Request, res: Response) => {
   res.json({ message: ' API SportsLine funcionando correctamente' });
 });
