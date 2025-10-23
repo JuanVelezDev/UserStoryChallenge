@@ -6,7 +6,7 @@ dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'default_refresh_secret';
-const ACCESS_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '15m';
+const ACCESS_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '50m';
 const REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
 // Generate tokens
 export const generateTokens = (payload: object) => {
