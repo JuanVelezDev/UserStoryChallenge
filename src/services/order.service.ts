@@ -58,4 +58,50 @@ export class OrderService {
       include: [Client, User, OrderProduct],
     });
   }
+
+
+  // Get orders
+  static async getOrders(filters?: { client_id?: number; product_id?: number }) {
+    const where: any = {};
+    const include: any = [
+      { model: Client },
+      { model: User },
+      { model: OrderProduct, include: [Product] },
+    ];
+
+    // Filter by client
+    if (filters?.client_id) {
+      where.client_id = filters.client_id;
+    }
+
+    // Filter by product (via many-to-many relationship)
+    if (filters?.product_id) {
+      include[2].where = { product_id: filters.product_id };
+    }
+
+    const orders = await Order.findAll({
+      where,
+      include,
+      order: [['id', 'ASC']],
+    });
+
+    return orders;
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

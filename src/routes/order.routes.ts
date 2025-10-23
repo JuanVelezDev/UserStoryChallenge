@@ -8,4 +8,6 @@ const router = Router();
 // Only admin or vendor can create orders
 router.post('/', verifyToken, checkRole(['admin', 'vendedor']), OrderController.createOrder);
 
+// Get orders
+router.get('/', verifyToken, checkRole(['admin', 'vendedor']), OrderController.getOrders);
 export default router;

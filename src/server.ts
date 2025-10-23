@@ -6,6 +6,7 @@ import productRoutes from './routes/product.routes';
 import clientRoutes from './routes/client.routes';
 import orderRoutes from './routes/order.routes';
 
+
 // Load environment variables
 dotenv.config();
 
